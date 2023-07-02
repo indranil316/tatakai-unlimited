@@ -1,0 +1,42 @@
+.health-bar{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 40px;
+    .player-health{
+        width: 100%;
+        background-color: rgb(63, 63, 63);
+        height: 30px;
+        position: relative;
+        display: flex;
+        flex-direction: row-reverse;
+        .health{
+            background-color: yellow;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .timer{
+        width: 200px;
+        background-color: red;
+        height: 80px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .enemy-health{
+        width: 100%;
+        background-color: rgb(63, 63, 63);
+        height: 30px;
+        position: relative;
+        .health{
+            background-color: rgb(180, 180, 1);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
