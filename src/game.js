@@ -1,8 +1,9 @@
 /** @type {HTMLCanvasElement} */
-import {Sprite} from "./classes";
+import {Fighter, Sprite} from "./classes";
 import {customEvents} from './constants';
 import {keys} from './state';
 import {gameUtils,timer} from './utils';
+import bgImage from './assets/images/background/bg2-moonlit-forest.jpg';
 
 const canvas = document.querySelector('canvas#game');
 const c = canvas.getContext('2d');
@@ -10,8 +11,17 @@ const c = canvas.getContext('2d');
 const WIDTH = canvas.width = window.innerWidth;
 const HEIGHT = canvas.height = window.innerHeight;
 
+const background = new Sprite({
+    width:WIDTH,
+    height:HEIGHT,
+    position:{
+        x:0,
+        y:0
+    },
+    imageSrc:bgImage
+},c,canvas)
 
-const player = new Sprite({
+const player = new Fighter({
     width:50,
     height:150,
     position:{
@@ -29,7 +39,7 @@ const player = new Sprite({
 },c,canvas);
 
 
-const enemy = new Sprite({
+const enemy = new Fighter({
     width:50,
     height:150,
     position:{
@@ -105,6 +115,7 @@ function animate(){
     window.requestAnimationFrame(animate);
     c.fillStyle="black";
     c.fillRect(0,0,WIDTH,HEIGHT);
+    background.update()
     player.update();
     enemy.update();
 
