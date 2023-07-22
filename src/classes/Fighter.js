@@ -1,14 +1,33 @@
 /** @type {HTMLCanvasElement} */
+import Sprite from "./Sprite";
+import {canvas, c, WIDTH, HEIGHT} from '../state';
 const gravity = 0.7;
 
-export default class Fighter{
-    constructor({width,height,position, velocity, color = 'red',offset},c,canvas){
-        this.position = position;
+export default class Fighter extends Sprite{
+    constructor({
+        width,
+        height,
+        position, 
+        velocity, 
+        color = 'red',
+        offset = {x:0,y:0},
+        imageSrc,
+        scale = 1,
+        framesMax = 1,
+    }){
+        super({
+            imageSrc,
+            scale,
+            framesMax,
+            position,
+            width,
+            height,
+            offset
+        });
+        this.framesCurrent = 0;
+        this.framesElasped = 0;
+        this.framesHold = 8;
         this.velocity=velocity;
-        this.width=width;
-        this.height = height;
-        this.c=c;
-        this.canvas=canvas;
         this.lastKey=null;
         this.attackBox = {
             position:{
@@ -23,28 +42,22 @@ export default class Fighter{
         this.isAttacking = false;
         this.health=100;
     }
-    draw(){
-        this.c.fillStyle = this.color;
-        this.c.fillRect(this.position.x, this.position.y, this.width, this.height);
-        if(this.isAttacking){
-            this.c.fillStyle = 'blue';
-            this.c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-        }    
-    }
+
     update(){
         this.draw();
+        this.animateFrames();
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
         this.attackBox.position.y = this.position.y;
 
         this.position.y += this.velocity.y;
         this.position.x += this.velocity.x;
-        if(this.position.y + this.height + this.velocity.y >= this.canvas.height){
+        if(this.position.y + this.height + this.velocity.y >= canvas.height){
             this.velocity.y=0
         }
         else{
             this.velocity.y += gravity;
         }
-        if(this.position.x + this.width + this.velocity.x >= this.canvas.width){
+        if(this.position.x + this.width + this.velocity.x >= canvas.width){
             this.velocity.x=0
         }
     }
